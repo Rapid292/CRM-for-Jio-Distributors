@@ -1,0 +1,36 @@
+body {
+   background-color: rgb(240, 208, 104);
+}
+
+
+.site-header {
+   min-height: min-content;
+   border: 2px solid black;
+   
+}
+
+.site-header .navbar-nav .nav-link {
+   color: #cbd5db;
+ }
+ 
+ .site-header .navbar-nav .nav-link:hover {
+   color: #ffffff;
+ }
+ 
+ .site-header .navbar-nav .nav-link.active {
+   font-weight: 500;
+ }
+
+.content-section {
+   background-color: rgb(231, 176, 176);
+   border: .5px solid rgb(73, 72, 72);
+   padding: 2rem;
+   font-weight: 500;
+}
+
+.account-img {
+   height: 175px;
+   width: 175px;
+   margin-right: 20px;
+   margin-bottom: 16px;
+}

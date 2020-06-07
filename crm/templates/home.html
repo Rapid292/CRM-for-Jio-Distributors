@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block content  %}
+<div class="container mt-3">
+   <h2 class="text-center">All FOS Accounts</h2>
+   {% for fse in fos %}
+   <div class="card d-inline-flex m-3 align-items-center" style="width: 18rem;">
+      <div class="mt-3">
+         <img class="rounded-circle account-img"
+            src="{{ url_for("static", filename="profile_pics/" + fse.image_file) }}">
+      </div>
+      <div class="card-body text-center">
+         <h5 class="card-title">{{fse.username}}</h5>
+         <p class="card-text"><strong>Latest Debt - {{ fse.hisaab.latest_debt  }}</strong></p>
+         <p class="card-text"><strong>Net Sale - {{ fse.hisaab.net_sale  }}</strong></p>
+         <p class="card-text"><strong>Last login - {{ fse.hisaab.date  }}</strong></p>
+         <a href="{{ url_for('hisaab') }}" class="btn btn-primary">Hisaab</a>
+      </div>
+   </div>
+   {% endfor %}
+</div>
+{% endblock content %}
