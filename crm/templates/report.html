@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block content  %}
-<div class="container col-md-8 text-center mt-2">
+<div class="container-fluid text-center mt-2">
    <legend class="font-weight-bold mb-1">{{ current_user.username }} - Report</legend>
    <table class="table">
       <thead class="thead-dark">
@@ -26,7 +26,7 @@
          {% for hisaab in current_user.hisaab %}
          <tr>
             <th scope="row">{{ hisaab.id }}</th>
-            <td>{{ hisaab.date.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            <td>{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</td>
             <td>{{ hisaab.open_bal }}</td>
             <td>{{ hisaab.manual_trans }}</td>
             <td>{{ hisaab.auto_trans }}</td>

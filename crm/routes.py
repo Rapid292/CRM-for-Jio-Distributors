@@ -17,7 +17,8 @@ def index():
 @login_required
 def home():
     fos = User.query.all()
-    return render_template("home.html", title="Home", fos=fos)
+    hisaab = Hisaab.query.filter()
+    return render_template("home.html", title="Home", fos=fos, hisaab=hisaab)
 
 
 @app.route("/about")
@@ -69,7 +70,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("home"))
+    return redirect(url_for("index"))
 
 
 def save_picture(form_picture):
@@ -181,6 +182,7 @@ def hisaab():
 @app.route("/home/hisaab/report")
 @login_required
 def report():
-    hisaab = Hisaab.query.all()
+    hisaab = Hisaab.query.order_by(Hisaab.date).all()
+    # for hisaab in current_user.hisaab:
 
     return render_template("report.html", title="Report", hisaab=hisaab)
