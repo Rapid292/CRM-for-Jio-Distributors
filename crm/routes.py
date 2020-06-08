@@ -111,29 +111,30 @@ def profile():
     )
 
 
-def total_transfer(manual, auto):
+def cal_total_transfer(manual, auto):
+    print(manual, auto)
     total_transfer = manual + auto
     return total_transfer
 
 
-def total_sale(opening, total_trans, closing):
-    total_sale = opening + total_trans - closing
-    return total_sale
+def cal_total_sale(opening, total_trans, closing):
+    total = opening + total_trans - closing
+    return total
 
 
-def comm_value(total_sale, comm=4):
+def cal_comm_value(total_sale, comm=4):
     commission = round(total_sale * (comm / 100))
     return commission
 
 
-def net_sale(total_sale, comm_value):
+def cal_net_sale(total_sale, comm_value):
     net_sale = total_sale - comm_value
     return net_sale
 
 
-def latest_debt(net_sale, last_debt, amt_received):
+def cal_latest_debt(net_sale, last_debt, amt_received):
     latest_debt = net_sale + last_debt - amt_received
-    return last_debt
+    return latest_debt
 
 
 @app.route("/home/hisaab", methods=["GET", "POST"])
@@ -141,18 +142,17 @@ def latest_debt(net_sale, last_debt, amt_received):
 def hisaab():
     form = HisaabForm()
 
-    
     if form.validate_on_submit():
 
-        total_trans = total_transfer(form.manual_trans.data, form.auto_trans.data)
-
-        total_sale = total_sale(form.opening.data, total_trans, form.closing.data)
-
-        comm_value = comm_value(total_sale)
-
-        net_sale = net_sale(total_sale, comm_value)
-
-        latest_debt = latest_debt(net_sale, form.last_debt.data, form.amt_received.data)
+        total_trans = cal_total_transfer(form.manual_trans.data, form.auto_trans.data)
+        total_sale = cal_total_sale(
+            (form.opening.data), total_trans, (form.closing.data)
+        )
+        comm_value = cal_comm_value(total_sale)
+        net_sale = cal_net_sale(total_sale, comm_value)
+        latest_debt = cal_latest_debt(
+            net_sale, (form.last_debt.data), (form.amt_received.data)
+        )
 
         hisaab = Hisaab(
             open_bal=form.opening.data,
@@ -181,4 +181,6 @@ def hisaab():
 @app.route("/home/hisaab/report")
 @login_required
 def report():
-    return render_template("report.html", title="Report")
+    hisaab = Hisaab.query.all()
+
+    return render_template("report.html", title="Report", hisaab=hisaab)

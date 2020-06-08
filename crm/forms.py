@@ -7,6 +7,7 @@ from wtforms import (
     BooleanField,
     IntegerField,
     TextAreaField,
+    validators,
 )
 from wtforms.validators import DataRequired, Length, email, EqualTo, ValidationError
 from crm.models import User
@@ -95,13 +96,13 @@ class HisaabForm(FlaskForm):
     manual_trans = IntegerField("Manual Transfer", validators=[DataRequired()])
     auto_trans = IntegerField("Auto Transfer", validators=[DataRequired()])
     closing = IntegerField("Closing", validators=[DataRequired()])
-    total_trans = IntegerField("Total Transfer", validators=[DataRequired()])
-    total_sale = IntegerField("Total Sale", validators=[DataRequired()])
-    commission = IntegerField("Commission", validators=[DataRequired()])
-    commission_value = IntegerField("Comm Value", validators=[DataRequired()])
-    net_sale = IntegerField("Net Sale", validators=[DataRequired()])
+    # total_trans = IntegerField("Total Transfer", validators=[validators.Optional()])
+    # total_sale = IntegerField("Total Sale", validators=[validators.Optional()])
+    # commission = IntegerField("Commission", validators=[validators.Optional()])
+    # commission_value = IntegerField("Comm Value", validators=[validators.Optional()])
+    # net_sale = IntegerField("Net Sale", validators=[validators.Optional()])
     last_debt = IntegerField("Last Debt", validators=[DataRequired()])
     amt_received = IntegerField("Amount Received", validators=[DataRequired()])
-    latest_debt = IntegerField("Latest Debt", validators=[DataRequired()])
+    # latest_debt = IntegerField("Latest Debt", validators=[validators.Optional()])
     remarks = TextAreaField("Remarks", validators=[DataRequired()])
     submit = SubmitField("Calculate")

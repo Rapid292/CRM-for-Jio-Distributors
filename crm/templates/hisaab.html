@@ -60,73 +60,6 @@
                {{ form.closing(class="form-control form-control-lg") }}
                {% endif %}
             </div>
-            <fieldset disabled>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.total_trans.label(class="form-control-label") }}
-                  {% if form.total_trans.errors %}
-                  {{ form.total_trans(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.total_trans.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.total_trans(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.total_sale.label(class="form-control-label") }}
-                  {% if form.total_sale.errors %}
-                  {{ form.total_sale(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.total_sale.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.total_sale(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.commission.label(class="form-control-label") }}
-                  {% if form.commission.errors %}
-                  {{ form.commission(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.commission.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.commission(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.commission_value.label(class="form-control-label") }}
-                  {% if form.commission_value.errors %}
-                  {{ form.commission_value(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.commission_value.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.commission_value(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.net_sale.label(class="form-control-label") }}
-                  {% if form.net_sale.errors %}
-                  {{ form.net_sale(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.net_sale.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.net_sale(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-            </fieldset>
             <div class="form-group mr-3 col-md-2">
                {{ form.last_debt.label(class="form-control-label") }}
                {% if form.last_debt.errors %}
@@ -153,21 +86,6 @@
                {{ form.amt_received(class="form-control form-control-lg") }}
                {% endif %}
             </div>
-            <fieldset disabled>
-               <div class="form-group mr-3 col-md-2">
-                  {{ form.latest_debt.label(class="form-control-label") }}
-                  {% if form.latest_debt.errors %}
-                  {{ form.latest_debt(class="form-control form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                     {% for error in form.latest_debt.errors%}
-                     <span>{{ error }}</span>
-                     {% endfor %}
-                  </div>
-                  {% else %}
-                  {{ form.latest_debt(class="form-control form-control-lg") }}
-                  {% endif %}
-               </div>
-            </fieldset>
             <div class="form-group mr-3 col-md-6">
                {{ form.remarks.label(class="form-control-label") }}
                {% if form.remarks.errors %}
