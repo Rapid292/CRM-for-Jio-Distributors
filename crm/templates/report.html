@@ -2,6 +2,51 @@
 
 {% block content  %}
 <div class="container-fluid text-center mt-2">
+   {% if current_user.username == admin %}
+   {% for fse in fos %}
+   <legend class="font-weight-bold mb-1">{{ fse.username }} - Report</legend>
+   <table class="table">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Opening</th>
+            <th scope="col">Manual</th>
+            <th scope="col">Auto</th>
+            <th scope="col">Total Transfer</th>
+            <th scope="col">Closing</th>
+            <th scope="col">Total Sale</th>
+            <th scope="col">Commission Value</th>
+            <th scope="col">Net Sale</th>
+            <th scope="col">Last Debt</th>
+            <th scope="col">Amount Deposit</th>
+            <th scope="col">Latest Debt</th>
+            <th scope="col">Remarks</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for hisaab in fse.hisaab %}
+         <tr>
+            <th scope="row">{{ hisaab.id }}</th>
+            <td>{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</td>
+            <td>{{ hisaab.open_bal }}</td>
+            <td>{{ hisaab.manual_trans }}</td>
+            <td>{{ hisaab.auto_trans }}</td>
+            <td>{{ hisaab.total_trans }}</td>
+            <td>{{ hisaab.closing }}</td>
+            <td>{{ hisaab.total_sale }}</td>
+            <td>{{ hisaab.commission_value }}</td>
+            <td>{{ hisaab.net_sale }}</td>
+            <td>{{ hisaab.last_debt }}</td>
+            <td>{{ hisaab.amt_received }}</td>
+            <td>{{ hisaab.latest_debt }}</td>
+            <td>{{ hisaab.remarks }}</td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+   {% endfor %}
+   {% else %}
    <legend class="font-weight-bold mb-1">{{ current_user.username }} - Report</legend>
    <table class="table">
       <thead class="thead-dark">
@@ -43,5 +88,6 @@
          {% endfor %}
       </tbody>
    </table>
+   {% endif %}
 </div>
 {% endblock content %}

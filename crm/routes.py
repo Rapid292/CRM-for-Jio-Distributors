@@ -182,7 +182,8 @@ def hisaab():
 @app.route("/home/hisaab/report")
 @login_required
 def report():
-    hisaab = Hisaab.query.order_by(Hisaab.date).all()
-    # for hisaab in current_user.hisaab:
+    hisaab = Hisaab.query.all()
+    fos = User.query.all()
+    admin = "admin"
 
-    return render_template("report.html", title="Report", hisaab=hisaab)
+    return render_template("report.html", title="Report", fos=fos, admin=admin)
