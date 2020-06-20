@@ -5,7 +5,7 @@
    <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
-         <legend class="border-bottom mb-4">{{current_user.username}} - Hisaab</legend>
+         <legend class="border-bottom mb-4">{{current_user.username}} - {{ legend }}</legend>
          <div class="form-row">
             <div class="form-group mr-3 col-md-2">
                {{ form.opening.label(class="form-control-label") }}

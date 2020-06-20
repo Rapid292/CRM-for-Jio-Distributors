@@ -3,7 +3,7 @@
 {% block content  %}
 <div class="container-fluid text-center mt-2">
    {% if current_user.username == admin %}
-   <legend class="font-weight-bold mb-1">FOS's - Report</legend>
+   <legend class="font-weight-bold mb-1">Hisaab by {{ user.username }} ({{ hisaab.total }})</legend>
    <table class="table">
       <thead class="thead-dark">
          <tr>
