@@ -2,8 +2,14 @@ import secrets
 import os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
-from crm.forms import RegistrationForm, LoginForm, UpdateProfileForm, HisaabForm
-from crm.models import Hisaab, User
+from crm.forms import (
+    RegistrationForm,
+    LoginForm,
+    UpdateProfileForm,
+    HisaabForm,
+    MasterForm,
+)
+from crm.models import Hisaab, User, Master
 from crm import app, bcrypt, db
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -18,7 +24,10 @@ def index():
 def home():
     fos = User.query.all()
     hisaab = Hisaab.query.filter()
-    return render_template("home.html", title="Home", fos=fos, hisaab=hisaab)
+    admin = "Admin"
+    return render_template(
+        "home.html", title="Home", fos=fos, hisaab=hisaab, admin=admin
+    )
 
 
 @app.route("/about")
@@ -113,7 +122,6 @@ def profile():
 
 
 def cal_total_transfer(manual, auto):
-    print(manual, auto)
     total_transfer = manual + auto
     return total_transfer
 
@@ -182,8 +190,52 @@ def hisaab():
 @app.route("/home/hisaab/report")
 @login_required
 def report():
-    hisaab = Hisaab.query.all()
+    hisaab = Hisaab.query.order_by(Hisaab.date.desc())
     fos = User.query.all()
-    admin = "admin"
+    admin = "Admin"
 
-    return render_template("report.html", title="Report", fos=fos, admin=admin)
+    return render_template(
+        "report.html", title="Report", hisaab=hisaab, admin=admin, fos=fos
+    )
+
+
+@app.route("/home/master", methods=["GET", "POST"])
+@login_required
+def master():
+    form = MasterForm()
+    admin = "Admin"
+
+    if form.validate_on_submit():
+
+        total_trans = cal_total_transfer(form.manual_trans.data, form.auto_trans.data)
+
+        master = Master(
+            open_bal=form.opening.data,
+            primary=form.primary.data,
+            manual_trans=form.manual_trans.data,
+            auto_trans=form.auto_trans.data,
+            closing=form.closing.data,
+            total_trans=total_trans,
+            fos_bal=form.fos_bal.data,
+            master_bal=form.master_bal.data,
+            remarks=form.remarks.data,
+        )
+
+        db.session.add(master)
+        db.session.commit()
+
+        flash("Your report has been generated", "success")
+        return redirect(url_for("master_report"))
+    return render_template("master.html", title="Master", form=form, admin=admin)
+
+
+@app.route("/home/master/master_report")
+@login_required
+def master_report():
+    master = Master.query.order_by(Master.date.desc())
+    admin = "Admin"
+
+    return render_template(
+        "master_report.html", title="Report", master=master, admin=admin
+    )
+

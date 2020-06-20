@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default="default.jpeg")
     password = db.Column(db.String(20), nullable=False)
     pos_id = db.Column(db.Integer, unique=True, nullable=False)
-    hisaab = db.relationship("Hisaab", backref="fos", lazy=True)
+    hisaab = db.relationship("Hisaab", backref="fos", lazy="dynamic")
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.pos_id}')"
@@ -40,3 +40,20 @@ class Hisaab(db.Model):
 
     def __repr__(self):
         return f"Hisaab('{self.closing}', '{self.open_bal}', '{self.date}', '{self.remarks}')"
+
+
+class Master(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    open_bal = db.Column(db.Integer, nullable=False, default=0)
+    primary = db.Column(db.Integer, nullable=False, default=0)
+    manual_trans = db.Column(db.Integer, nullable=False, default=0)
+    auto_trans = db.Column(db.Integer, nullable=False, default=0)
+    closing = db.Column(db.Integer, nullable=False, default=0)
+    total_trans = db.Column(db.Integer, default=0)
+    fos_bal = db.Column(db.Integer, default=0)
+    master_bal = db.Column(db.Integer, nullable=False, default=0)
+    remarks = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Master('{self.closing}', '{self.open_bal}', '{self.date}', '{self.remarks}')"

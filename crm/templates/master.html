@@ -1,0 +1,129 @@
+{% extends "index.html" %}
+
+{% block content  %}
+{% if current_user.username == admin %}
+<div class="container content-section col-md-6 mt-4">
+   <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+         <legend class="border-bottom mb-4">Master - Hisaab</legend>
+         <div class="form-row">
+            <div class="form-group mr-3 col-md-2">
+               {{ form.opening.label(class="form-control-label") }}
+
+               {% if form.opening.errors %}
+               {{ form.opening(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.opening.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.opening(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.primary.label(class="form-control-label") }}
+
+               {% if form.primary.errors %}
+               {{ form.primary(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.primary.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.primary(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.manual_trans.label(class="form-control-label") }}
+               {% if form.manual_trans.errors %}
+               {{ form.manual_trans(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.manual_trans.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.manual_trans(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.auto_trans.label(class="form-control-label") }}
+               {% if form.auto_trans.errors %}
+               {{ form.auto_trans(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.auto_trans.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.auto_trans(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.closing.label(class="form-control-label") }}
+               {% if form.closing.errors %}
+               {{ form.closing(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.closing.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.closing(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.fos_bal.label(class="form-control-label") }}
+               {% if form.fos_bal.errors %}
+               {{ form.fos_bal(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.fos_bal.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.fos_bal(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-2">
+               {{ form.master_bal.label(class="form-control-label") }}
+               {% if form.master_bal.errors %}
+               {{ form.master_bal(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.master_bal.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.master_bal(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+            <div class="form-group mr-3 col-md-6">
+               {{ form.remarks.label(class="form-control-label") }}
+               {% if form.remarks.errors %}
+               {{ form.remarks(class="form-control form-control-lg is-invalid") }}
+               <div class="invalid-feedback">
+                  {% for error in form.remarks.errors%}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+               </div>
+               {% else %}
+               {{ form.remarks(class="form-control form-control-lg") }}
+               {% endif %}
+            </div>
+         </div>
+      </fieldset>
+      <div class="form-group">
+         {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+   </form>
+</div>
+{% else %}
+<div class="content-section text-center mt-4">
+   <h1><strong>You're Not Allowed</strong></h1>
+</div>
+{% endif %}
+{% endblock content %}

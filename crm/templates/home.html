@@ -14,9 +14,16 @@
          <!-- <p class="card-text"><strong>Latest Debt - {{ hisaab.latest_debt  }}</strong></p>
          <p class="card-text"><strong>Net Sale - {{ hisaab.net_sale  }}</strong></p>
          <p class="card-text"><strong>Last login - {{ hisaab.date  }}</strong></p> -->
+         {% if current_user.username != admin %}
          {% if fse == current_user %}
          <a href="{{ url_for('hisaab') }}" class="btn btn-primary mt-2">Hisaab</a>
          <a href="{{ url_for('report') }}" class="btn btn-primary mt-2">Report</a>
+         {% endif %}
+         {% else  %}
+         {% if fse == current_user %}
+         <a href="{{ url_for('master') }}" class="btn btn-primary mt-2">Master</a>
+         <a href="{{ url_for('report') }}" class="btn btn-primary mt-2">FOS Report</a>
+         {% endif %}
          {% endif %}
       </div>
    </div>

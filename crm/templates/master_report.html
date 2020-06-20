@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+
+{% block content  %}
+<div class="container-fluid text-center mt-2">
+   {% if current_user.username == admin %}
+   <legend class="font-weight-bold mb-1">Master - Report</legend>
+   <table class="table">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Opening</th>
+            <th scope="col">Primary</th>
+            <th scope="col">Manual</th>
+            <th scope="col">Auto</th>
+            <th scope="col">Total Transfer</th>
+            <th scope="col">Closing</th>
+            <th scope="col">Fos Balance</th>
+            <th scope="col">Master Balance</th>
+            <th scope="col">Remarks</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for master in master %}
+         <tr>
+            <th scope="row">{{ master.id }}</th>
+            <td>{{ master.date.strftime("%d-%m-%Y %H:%M") }}</td>
+            <td>{{ master.open_bal }}</td>
+            <td>{{ master.primary }}</td>
+            <td>{{ master.manual_trans }}</td>
+            <td>{{ master.auto_trans }}</td>
+            <td>{{ master.total_trans }}</td>
+            <td>{{ master.closing }}</td>
+            <td>{{ master.fos_bal }}</td>
+            <td>{{ master.master_bal }}</td>
+            <td>{{ master.remarks }}</td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+   {% else %}
+   <div class="content-section text-center mt-4">
+      <h1><strong>You're Not Allowed</strong></h1>
+   </div>
+   {% endif %}
+</div>
+{% endblock content %}
