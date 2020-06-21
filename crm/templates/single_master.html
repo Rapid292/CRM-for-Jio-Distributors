@@ -1,0 +1,65 @@
+{% extends "index.html" %}
+
+{% block content  %}
+<div class="container-fluid text-center mt-2">
+   <legend class="font-weight-bold mb-1">Master of Date-({{ master.date.strftime("%d-%m-%Y %H:%M") }})</legend>
+   <div>
+      <a href="{{ url_for('update_master', master_id=master.id) }}" class="btn btn-secondary btn-sm m-2">Update</a>
+      <button type="button" class="btn btn-danger btn-sm m-2" data-toggle="modal"
+         data-target="#deleteModal">Delete</button>
+   </div>
+   <table class="table">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col">#</th>
+            <th scope="col">Opening</th>
+            <th scope="col">Primary</th>
+            <th scope="col">Manual</th>
+            <th scope="col">Auto</th>
+            <th scope="col">Total Transfer</th>
+            <th scope="col">Closing</th>
+            <th scope="col">Fos Balance</th>
+            <th scope="col">Master Balance</th>
+            <th scope="col">Remarks</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <th scope="row">{{ master.id }}</th>
+            <td>{{ master.open_bal }}</td>
+            <td>{{ master.primary }}</td>
+            <td>{{ master.manual_trans }}</td>
+            <td>{{ master.auto_trans }}</td>
+            <td>{{ master.total_trans }}</td>
+            <td>{{ master.closing }}</td>
+            <td>{{ master.fos_bal }}</td>
+            <td>{{ master.master_bal }}</td>
+            <td>{{ master.remarks }}</td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Master?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Please Note: All data related to this master will be deleted!
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('delete_master', master_id = master.id) }}" method="POST">
+               <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock content %}

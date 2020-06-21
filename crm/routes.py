@@ -27,7 +27,6 @@ def index():
 def home():
     fos = User.query.all()
     hisaab = Hisaab.query.filter()
-
     return render_template(
         "home.html", title="Home", fos=fos, hisaab=hisaab, admin=admin
     )
@@ -153,6 +152,8 @@ def cal_latest_debt(net_sale, last_debt, amt_received):
 @login_required
 def hisaab():
     form = HisaabForm()
+    fos = User.query.filter_by(username=current_user.username).first()
+    hisaab = Hisaab.query.filter_by(fos=fos).order_by(Hisaab.id.desc()).first()
 
     if form.validate_on_submit():
 
@@ -186,7 +187,16 @@ def hisaab():
         db.session.commit()
 
         flash("Your report has been generated", "success")
-        return redirect(url_for("report"))
+        return redirect(url_for("user_hisaab", username=current_user.username))
+
+    elif request.method == "GET":
+        if hisaab != None:
+            form.opening.data = hisaab.closing
+            form.last_debt.data = hisaab.latest_debt
+        else:
+            form.opening.data = 0
+            form.last_debt.data = 0
+
     return render_template(
         "hisaab.html", title="Hisaab", form=form, legend="New Hisaab"
     )
@@ -196,7 +206,7 @@ def hisaab():
 @login_required
 def report():
     page = request.args.get("page", 1, type=int)
-    hisaab = Hisaab.query.order_by(Hisaab.date.desc()).paginate(page=page, per_page=10)
+    hisaab = Hisaab.query.order_by(Hisaab.date.desc()).paginate(page=page, per_page=5)
     return render_template("report.html", title="Report", hisaab=hisaab, admin=admin)
 
 
@@ -274,21 +284,29 @@ def delete_hisaab(hisaab_id):
     return redirect(url_for("report"))
 
 
+def cal_closing(opening, primary, total_trans):
+    closing = opening + primary - total_trans
+    return closing
+
+
 @app.route("/home/master", methods=["GET", "POST"])
 @login_required
 def master():
     form = MasterForm()
+    master = Master.query.order_by(Master.id.desc()).first()
 
     if form.validate_on_submit():
 
         total_trans = cal_total_transfer(form.manual_trans.data, form.auto_trans.data)
+
+        closing = cal_closing(form.opening.data, form.primary.data, total_trans)
 
         master = Master(
             open_bal=form.opening.data,
             primary=form.primary.data,
             manual_trans=form.manual_trans.data,
             auto_trans=form.auto_trans.data,
-            closing=form.closing.data,
+            closing=closing,
             total_trans=total_trans,
             fos_bal=form.fos_bal.data,
             master_bal=form.master_bal.data,
@@ -300,16 +318,94 @@ def master():
 
         flash("Your report has been generated", "success")
         return redirect(url_for("master_report"))
-    return render_template("master.html", title="Master", form=form, admin=admin)
+
+    elif request.method == "GET":
+        if master != None:
+            form.opening.data = master.closing
+        else:
+            form.opening.data = 0
+
+    return render_template(
+        "master.html", title="Master", form=form, admin=admin, legend="Master Report"
+    )
 
 
 @app.route("/home/master/master_report")
 @login_required
 def master_report():
-    master = Master.query.order_by(Master.date.desc())
+    page = request.args.get("page", 1, type=int)
+    master = Master.query.order_by(Master.date.desc()).paginate(page=page, per_page=5)
     return render_template(
-        "master_report.html", title="Report", master=master, admin=admin
+        "master_report.html", title="Master Report", master=master, admin=admin
     )
+
+
+@app.route("/home/master/master_report/<int:master_id>")
+@login_required
+def single_master(master_id):
+    if current_user.username != admin:
+        abort(403)
+    master = Master.query.get_or_404(master_id)
+    return render_template(
+        "single_master.html", title=master.date, master=master, admin=admin
+    )
+
+
+@app.route("/home/master/master_report/<int:master_id>/update", methods=["GET", "POST"])
+@login_required
+def update_master(master_id):
+    master = Master.query.get_or_404(master_id)
+    if current_user.username != admin:
+        abort(403)
+    form = MasterForm()
+    if form.validate_on_submit():
+
+        total_trans = cal_total_transfer(form.manual_trans.data, form.auto_trans.data)
+        closing = cal_closing(form.opening.data, form.primary.data, total_trans)
+
+        master.open_bal = form.opening.data
+        master.date = datetime.now()
+        master.primary = form.primary.data
+        master.manual_trans = form.manual_trans.data
+        master.auto_trans = form.auto_trans.data
+        master.closing = closing
+        master.total_trans = total_trans
+        master.fos_bal = form.fos_bal.data
+        master.master_bal = form.master_bal.data
+        master.remarks = form.remarks.data
+
+        db.session.commit()
+        flash("Your master has been updated", "success")
+        return redirect(url_for("single_master", master_id=master_id))
+    elif request.method == "GET":
+        form.opening.data = master.open_bal
+        form.primary.data = master.primary
+        form.manual_trans.data = master.manual_trans
+        form.auto_trans.data = master.auto_trans
+        form.fos_bal.data = master.fos_bal
+        form.master_bal.data = master.master_bal
+        form.remarks.data = master.remarks
+
+    return render_template(
+        "master.html",
+        title="Update Master",
+        form=form,
+        admin=admin,
+        master=master,
+        legend="Update Master",
+    )
+
+
+@app.route("/home/master/master_report/<int:master_id>/delete", methods=["GET", "POST"])
+@login_required
+def delete_master(master_id):
+    master = Master.query.get_or_404(master_id)
+    if current_user.username != admin:
+        abort(403)
+    db.session.delete(master)
+    db.session.commit()
+    flash("Your master has been deleted!", "success")
+    return redirect(url_for("master_report"))
 
 
 @app.route("/home/user/<string:username>")
@@ -320,9 +416,13 @@ def user_hisaab(username):
     hisaab = (
         Hisaab.query.filter_by(fos=user)
         .order_by(Hisaab.date.desc())
-        .paginate(page=page, per_page=10)
+        .paginate(page=page, per_page=5)
     )
     return render_template(
-        "user_hisaab.html", title="Hisaab Report", hisaab=hisaab, admin=admin, user=user
+        "user_hisaab.html",
+        title=current_user.username + " Report",
+        hisaab=hisaab,
+        admin=admin,
+        user=user,
     )
 

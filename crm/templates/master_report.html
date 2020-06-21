@@ -21,16 +21,19 @@
          </tr>
       </thead>
       <tbody>
-         {% for master in master %}
+         {% for master in master.items %}
          <tr>
             <th scope="row">{{ master.id }}</th>
-            <td>{{ master.date.strftime("%d-%m-%Y %H:%M") }}</td>
-            <td>{{ master.open_bal }}</td>
+            <td>
+               <a class="btn btn-success"
+                  href="{{ url_for('single_master', master_id=master.id) }}">{{ master.date.strftime("%d-%m-%Y %H:%M") }}</a>
+            </td>
+            <td><strong>{{ master.open_bal }}</strong></td>
             <td>{{ master.primary }}</td>
             <td>{{ master.manual_trans }}</td>
             <td>{{ master.auto_trans }}</td>
             <td>{{ master.total_trans }}</td>
-            <td>{{ master.closing }}</td>
+            <td><strong>{{ master.closing }}</strong></td>
             <td>{{ master.fos_bal }}</td>
             <td>{{ master.master_bal }}</td>
             <td>{{ master.remarks }}</td>
@@ -38,9 +41,20 @@
          {% endfor %}
       </tbody>
    </table>
+   {% for page_num in master.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=3) %}
+   {% if page_num %}
+   {% if master.page == page_num %}
+   <a class="btn btn-info mb-4" href="{{ url_for('master_report', page=page_num) }}">{{ page_num }}</a>
+   {% else %}
+   <a class="btn btn-outline-info mb-4" href="{{ url_for('master_report', page=page_num) }}">{{ page_num }}</a>
+   {% endif %}
+   {% else %}
+   ...
+   {% endif %}
+   {% endfor %}
    {% else %}
    <div class="content-section text-center mt-4">
-      <h1><strong>You're Not Allowed</strong></h1>
+      <h1><strong>Contact Your Admin!!</strong></h1>
    </div>
    {% endif %}
 </div>

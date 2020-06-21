@@ -17,7 +17,7 @@
          {% if current_user.username != admin %}
          {% if fse == current_user %}
          <a href="{{ url_for('hisaab') }}" class="btn btn-primary mt-2">Hisaab</a>
-         <a href="{{ url_for('report') }}" class="btn btn-primary mt-2">Report</a>
+         <a href="{{ url_for('user_hisaab', username=current_user.username) }}" class="btn btn-primary mt-2">Report</a>
          {% endif %}
          {% else  %}
          {% if fse == current_user %}

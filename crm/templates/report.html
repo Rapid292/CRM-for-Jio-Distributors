@@ -31,17 +31,17 @@
             <td><a class="btn btn-success"
                   href="{{ url_for('single_hisaab', hisaab_id=hisaab.id) }}">{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</a>
             </td>
-            <td>{{ hisaab.open_bal }}</td>
+            <td><strong>{{ hisaab.open_bal }}</strong></td>
             <td>{{ hisaab.manual_trans }}</td>
             <td>{{ hisaab.auto_trans }}</td>
             <td>{{ hisaab.total_trans }}</td>
-            <td>{{ hisaab.closing }}</td>
+            <td><strong>{{ hisaab.closing }}</strong></td>
             <td>{{ hisaab.total_sale }}</td>
             <td>{{ hisaab.commission_value }}</td>
             <td>{{ hisaab.net_sale }}</td>
-            <td>{{ hisaab.last_debt }}</td>
+            <td><strong>{{ hisaab.last_debt }}</strong></td>
             <td>{{ hisaab.amt_received }}</td>
-            <td>{{ hisaab.latest_debt }}</td>
+            <td><strong>{{ hisaab.latest_debt }}</strong></td>
             <td>{{ hisaab.remarks }}</td>
             <td><a href="{{ url_for('user_hisaab', username=hisaab.fos.username) }}">{{ hisaab.fos.username }}</a></td>
          </tr>
@@ -59,48 +59,6 @@
    ...
    {% endif %}
    {% endfor %}
-   {% else %}
-   <legend class="font-weight-bold mb-1">{{ current_user.username }} - Report</legend>
-   <table class="table">
-      <thead class="thead-dark">
-         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Date</th>
-            <th scope="col">Opening</th>
-            <th scope="col">Manual</th>
-            <th scope="col">Auto</th>
-            <th scope="col">Total Transfer</th>
-            <th scope="col">Closing</th>
-            <th scope="col">Total Sale</th>
-            <th scope="col">Commission Value</th>
-            <th scope="col">Net Sale</th>
-            <th scope="col">Last Debt</th>
-            <th scope="col">Amount Deposit</th>
-            <th scope="col">Latest Debt</th>
-            <th scope="col">Remarks</th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for hisaab in current_user.hisaab %}
-         <tr>
-            <th scope="row"><a href="#">{{ hisaab.id }}</a></th>
-            <td>{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</td>
-            <td>{{ hisaab.open_bal }}</td>
-            <td>{{ hisaab.manual_trans }}</td>
-            <td>{{ hisaab.auto_trans }}</td>
-            <td>{{ hisaab.total_trans }}</td>
-            <td>{{ hisaab.closing }}</td>
-            <td>{{ hisaab.total_sale }}</td>
-            <td>{{ hisaab.commission_value }}</td>
-            <td>{{ hisaab.net_sale }}</td>
-            <td>{{ hisaab.last_debt }}</td>
-            <td>{{ hisaab.amt_received }}</td>
-            <td>{{ hisaab.latest_debt }}</td>
-            <td>{{ hisaab.remarks }}</td>
-         </tr>
-         {% endfor %}
-      </tbody>
-   </table>
    {% endif %}
 </div>
 {% endblock content %}

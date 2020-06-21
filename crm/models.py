@@ -44,7 +44,7 @@ class Hisaab(db.Model):
 
 class Master(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     open_bal = db.Column(db.Integer, nullable=False, default=0)
     primary = db.Column(db.Integer, nullable=False, default=0)
     manual_trans = db.Column(db.Integer, nullable=False, default=0)

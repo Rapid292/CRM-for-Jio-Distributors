@@ -6,7 +6,7 @@
    <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
-         <legend class="border-bottom mb-4">Master - Hisaab</legend>
+         <legend class="border-bottom mb-4">{{ legend }}</legend>
          <div class="form-row">
             <div class="form-group mr-3 col-md-2">
                {{ form.opening.label(class="form-control-label") }}
@@ -60,19 +60,6 @@
                </div>
                {% else %}
                {{ form.auto_trans(class="form-control form-control-lg") }}
-               {% endif %}
-            </div>
-            <div class="form-group mr-3 col-md-2">
-               {{ form.closing.label(class="form-control-label") }}
-               {% if form.closing.errors %}
-               {{ form.closing(class="form-control form-control-lg is-invalid") }}
-               <div class="invalid-feedback">
-                  {% for error in form.closing.errors%}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-               </div>
-               {% else %}
-               {{ form.closing(class="form-control form-control-lg") }}
                {% endif %}
             </div>
             <div class="form-group mr-3 col-md-2">
