@@ -137,7 +137,7 @@ def cal_total_sale(opening, total_trans, closing):
 
 
 def cal_comm_value(total_sale, comm=4):
-    commission = round(total_sale * (comm / 100))
+    commission = round(total_sale * (comm / 100)) - 1
     return commission
 
 
@@ -292,6 +292,16 @@ def cal_closing(opening, primary, total_trans):
     return closing
 
 
+def cal_master_bal(closing, fos_bal):
+    calc_master_bal = closing + fos_bal
+    return calc_master_bal
+
+
+def cal_master_diff(calc_master_bal, master_bal):
+    diff = master_bal - calc_master_bal
+    return diff
+
+
 @app.route("/home/master", methods=["GET", "POST"])
 @login_required
 def master():
@@ -304,6 +314,10 @@ def master():
 
         closing = cal_closing(form.opening.data, form.primary.data, total_trans)
 
+        calc_master_bal = cal_master_bal(closing, form.fos_bal.data)
+
+        master_diff = cal_master_diff(calc_master_bal, form.master_bal.data)
+
         master = Master(
             open_bal=form.opening.data,
             primary=form.primary.data,
@@ -313,6 +327,8 @@ def master():
             total_trans=total_trans,
             fos_bal=form.fos_bal.data,
             master_bal=form.master_bal.data,
+            calc_master_bal=calc_master_bal,
+            master_diff=master_diff,
             remarks=form.remarks.data,
         )
 
@@ -364,7 +380,12 @@ def update_master(master_id):
     if form.validate_on_submit():
 
         total_trans = cal_total_transfer(form.manual_trans.data, form.auto_trans.data)
+
         closing = cal_closing(form.opening.data, form.primary.data, total_trans)
+
+        calc_master_bal = cal_master_bal(closing, form.fos_bal.data)
+
+        master_diff = cal_master_diff(calc_master_bal, form.master_bal.data)
 
         master.open_bal = form.opening.data
         master.date = datetime.now()
@@ -375,6 +396,8 @@ def update_master(master_id):
         master.total_trans = total_trans
         master.fos_bal = form.fos_bal.data
         master.master_bal = form.master_bal.data
+        master.calc_master_bal = calc_master_bal
+        master.master_diff = master_diff
         master.remarks = form.remarks.data
 
         db.session.commit()
@@ -439,6 +462,8 @@ def send_reset_email(user):
     )
     msg.body = f"""To reset your password, visit the following link:
 {url_for('reset_token', token=token, _external=True)}
+
+This link will be valid for next 30 mins only!!!!
 
 If you did not make this request then simply ignore this email and no changes will be made.
 """

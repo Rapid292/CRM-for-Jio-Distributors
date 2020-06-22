@@ -67,6 +67,8 @@ class Master(db.Model):
     total_trans = db.Column(db.Integer, default=0)
     fos_bal = db.Column(db.Integer, default=0)
     master_bal = db.Column(db.Integer, nullable=False, default=0)
+    calc_master_bal = db.Column(db.Integer, nullable=False, default=0)
+    master_diff = db.Column(db.Integer, nullable=False, default=0)
     remarks = db.Column(db.Text, nullable=False)
 
     def __repr__(self):

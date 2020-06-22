@@ -19,7 +19,9 @@
             <th scope="col">Total Transfer</th>
             <th scope="col">Closing</th>
             <th scope="col">Fos Balance</th>
-            <th scope="col">Master Balance</th>
+            <th scope="col">Partner Master</th>
+            <th scope="col">Calculated Master</th>
+            <th scope="col">Diff in Master</th>
             <th scope="col">Remarks</th>
          </tr>
       </thead>
@@ -34,6 +36,8 @@
             <td>{{ master.closing }}</td>
             <td>{{ master.fos_bal }}</td>
             <td>{{ master.master_bal }}</td>
+            <td>{{ master.calc_master_bal }}</td>
+            <td>{{ master.master_diff }}</td>
             <td>{{ master.remarks }}</td>
          </tr>
       </tbody>
