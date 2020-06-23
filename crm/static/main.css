@@ -10,11 +10,13 @@ body {
 }
 
 .site-header .navbar-nav .nav-link {
-   color: #cbd5db;
+   color: rgb(187, 180, 180);
+   font-size: 20px;
  }
  
  .site-header .navbar-nav .nav-link:hover {
-   color: #ffffff;
+   color: white;
+   font-size: 25px;
  }
  
  .site-header .navbar-nav .nav-link.active {
@@ -22,7 +24,7 @@ body {
  }
 
 .content-section {
-   background-color: rgb(231, 176, 176);
+   background-color: whitesmoke;
    border: .5px solid rgb(73, 72, 72);
    padding: 2rem;
    font-weight: 500;
