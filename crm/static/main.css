@@ -1,5 +1,5 @@
 body {
-   background-color: rgb(221, 173, 173);
+   background-color: rgb(255, 255, 255);
 }
 
 
@@ -9,14 +9,25 @@ body {
    
 }
 
+.site-header .navbar-nav .nav-welcome {
+   color: white;
+   font-size: 6px;
+   min-width: 0px;
+   min-height: 80px;
+   margin-right: 3px;
+   border: 1px dashed rgba(219, 128, 128, 0.822);
+
+}
+
+
 .site-header .navbar-nav .nav-link {
    color: rgb(187, 180, 180);
    font-size: 20px;
  }
  
  .site-header .navbar-nav .nav-link:hover {
-   color: white;
-   font-size: 25px;
+   color: rgb(157, 31, 255);
+   font-size: 23px;
  }
  
  .site-header .navbar-nav .nav-link.active {

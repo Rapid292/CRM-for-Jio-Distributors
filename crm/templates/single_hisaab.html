@@ -45,7 +45,8 @@
             <td>{{ hisaab.amt_received }}</td>
             <td>{{ hisaab.latest_debt }}</td>
             <td>{{ hisaab.remarks }}</td>
-            <td><a href="{{ url_for('user_hisaab', username=hisaab.fos.username) }}">{{ hisaab.fos.username }}</a></td>
+            <td><a class="btn btn-outline-info"
+                  href="{{ url_for('user_hisaab', username=hisaab.fos.username) }}">{{ hisaab.fos.username }}</a></td>
          </tr>
       </tbody>
    </table>

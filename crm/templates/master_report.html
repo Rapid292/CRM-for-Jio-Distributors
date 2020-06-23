@@ -27,7 +27,7 @@
          <tr>
             <th scope="row">{{ master.id }}</th>
             <td>
-               <a class="btn btn-success"
+               <a class="btn btn-outline-secondary"
                   href="{{ url_for('single_master', master_id=master.id) }}">{{ master.date.strftime("%d-%m-%Y %H:%M") }}</a>
             </td>
             <td><strong>{{ master.open_bal }}</strong></td>

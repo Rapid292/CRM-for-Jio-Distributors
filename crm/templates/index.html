@@ -44,9 +44,20 @@
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('master_report') }}">Master</a>
-                        <a class="dropdown-item" href="{{ url_for('report') }}">FOS</a>
+                        {% if current_user.username == admin %}
+                        <a class="dropdown-item" href="{{ url_for('report') }}">FOS Report</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">other</a>
+                        <a class="dropdown-item" target="_blank"
+                           href="https://idm.jioconnect.com/jiosso/SSOLogin.jsp">JIO
+                           LOGIN</a>
+                        {% else %}
+                        <a class="dropdown-item"
+                           href="{{ url_for('user_hisaab', username=current_user.username) }}">{{ current_user.username }}
+                           (Report)</a>
+
+                        {% endif %}
+
+
                      </div>
 
                   </li>
@@ -71,6 +82,12 @@
                   </div>
                </div>
             </div>
+         </div>
+         <div class="navbar-nav">
+            <li class="nav-welcome p-2">
+               <h5>Hey!</h5>
+               <h4>{{ current_user.username }}</h4>
+            </li>
          </div>
       </nav>
    </header>

@@ -22,16 +22,15 @@ admin = "Admin"
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Index")
+    return render_template("index.html", title="Index", admin=admin)
 
 
 @app.route("/home")
 @login_required
 def home():
     fos = User.query.all()
-    hisaab = Hisaab.query.filter()
     return render_template(
-        "home.html", title="Home", fos=fos, hisaab=hisaab, admin=admin
+        "home.html", title="Home", fos=fos, Hisaab=Hisaab, admin=admin, Master=Master
     )
 
 

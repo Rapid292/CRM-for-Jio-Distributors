@@ -2,29 +2,136 @@
 
 {% block content  %}
 <div class="container mt-3">
-   <h2 class="text-center">All FOS Accounts</h2>
+   <h2 class="text-center border border-dark alert alert-success">All FOS Accounts</h2>
+</div>
+<div class="container mt-3">
    {% for fse in fos %}
-   <div class="card d-inline-flex m-3 align-items-center" style="width: 18rem; height: 21rem;">
-      <div class="mt-3">
-         <img class="rounded-circle account-img"
+   <div class="card d-inline-flex align-items-center border border-dark m-3" style="width: 20rem; min-height: 21rem;">
+      <div class="border-bottom mt-3">
+         <img class="rounded-circle account-img ml-2"
             src="{{ url_for("static", filename="profile_pics/" + fse.image_file) }}">
       </div>
-      <div class="card-body text-center min">
-         <h5 class="card-title">{{fse.username}}</h5>
-         <!-- <p class="card-text"><strong>Latest Debt - {{ hisaab.latest_debt  }}</strong></p>
-         <p class="card-text"><strong>Net Sale - {{ hisaab.net_sale  }}</strong></p>
-         <p class="card-text"><strong>Last login - {{ hisaab.date  }}</strong></p> -->
-         {% if current_user.username != admin %}
-         {% if fse == current_user %}
-         <a href="{{ url_for('hisaab') }}" class="btn btn-primary mt-2">Hisaab</a>
-         <a href="{{ url_for('user_hisaab', username=current_user.username) }}" class="btn btn-primary mt-2">Report</a>
-         {% endif %}
-         {% else  %}
-         {% if fse == current_user %}
-         <a href="{{ url_for('master') }}" class="btn btn-primary mt-2">Master</a>
-         <a href="{{ url_for('report') }}" class="btn btn-primary mt-2">FOS Report</a>
-         {% endif %}
-         {% endif %}
+      {% if current_user.username != admin %}
+      {% if fse == current_user %}
+      <div class="inline mt-4">
+         <a href="{{ url_for('hisaab') }}" class="btn btn-outline-danger mr-2">Hisaab</a>
+         <a href="{{ url_for('user_hisaab', username=current_user.username) }}"
+            class="btn btn-outline-danger">Report</a>
+      </div>
+      {% endif %}
+      {% else  %}
+      {% if fse == current_user %}
+      <div class="inline mt-4">
+         <a href="{{ url_for('master') }}" class="btn btn-outline-danger mr-2">Master</a>
+         <a href="{{ url_for('report') }}" class="btn btn-outline-danger">FOS Report</a>
+      </div>
+      {% endif %}
+      {% endif %}
+      <div class="card-body text-center">
+         <p>
+            <button class="btn btn-dark" type="button" data-toggle="collapse"
+               data-target="#{{fse.username}}collapseBlock" aria-expanded="false"
+               aria-controls="{{fse.username}}collapseBlock">
+               <strong>
+                  <h5 class="card-title">{{fse.username}}</h5>
+               </strong>
+            </button>
+         </p>
+         <div class="collapse" id="{{fse.username}}collapseBlock">
+            <div class="card card-body">
+               {% set hisaab = Hisaab.query.filter_by(fos=fse).order_by(Hisaab.id.desc()).first() %}
+
+
+               {% if fse.username == admin %}
+               {% set master = Master.query.order_by(Master.id.desc()).first() %}
+               <div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#collapsePrimary" aria-expanded="false" aria-controls="collapsePrimary">
+                        <strong>Primary</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="collapsePrimary">
+                     <div class="card card-body">
+                        <p>Last Primary</p>
+                        <h5 class="btn btn-warning font-weight-bold">{{ master.primary  }}</h5>
+                     </div>
+                  </div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#collapseTotal" aria-expanded="false" aria-controls="collapseTotal">
+                        <strong>Total Transfer</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="collapseTotal">
+                     <div class="card card-body">
+                        <p>Total Transfer is the sum of auto transfer and manual transfer by the all FOS</p>
+                        <h5 class="btn btn-warning font-weight-bold">
+                           {{ master.total_trans }}
+                        </h5>
+                     </div>
+                  </div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#masterLogin" aria-expanded="false" aria-controls="masterLogin">
+                        <strong>Last login</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="masterLogin">
+                     <div class="card card-body">
+                        <p>Last login of admin was precisely at</p>
+                        <h5 class="btn btn-warning font-weight-bold">
+                           {{ master.date }}
+                        </h5>
+                     </div>
+                  </div>
+               </div>
+               {% else %}
+               <div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#LatestDebt{{ fse.username }}" aria-expanded="false"
+                        aria-controls="LatestDebt{{ fse.username }}">
+                        <strong>Latest Debt</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="LatestDebt{{ fse.username }}">
+                     <div class="card card-body">
+                        <p>Last Udhaari of {{ fse.username }} is</p>
+                        <h5 class="btn btn-warning font-weight-bold">{{ hisaab.latest_debt }}</h5>
+                     </div>
+                  </div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#NetSale{{ fse.username }}" aria-expanded="false"
+                        aria-controls="NetSale{{ fse.username }}">
+                        <strong>Net Sale</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="NetSale{{ fse.username }}">
+                     <div class="card card-body">
+                        <p>Last net sale of {{ fse.username }} was</p>
+                        <h5 class="btn btn-warning font-weight-bold">{{ hisaab.net_sale }}</h5>
+                     </div>
+                  </div>
+                  <p>
+                     <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                        data-target="#{{ fse.username }}" aria-expanded="false" aria-controls="{{ fse.username }}">
+                        <strong>Last login</strong>
+                     </button>
+                  </p>
+                  <div class="collapse" id="{{ fse.username }}">
+                     <div class="card card-body">
+                        <p>Last login of {{ fse.username }} was precisely at</p>
+                        <h5 class="btn btn-warning font-weight-bold">
+                           {{ hisaab.date }}
+                        </h5>
+                     </div>
+                  </div>
+               </div>
+               {% endif %}
+            </div>
+         </div>
       </div>
    </div>
    {% endfor %}
