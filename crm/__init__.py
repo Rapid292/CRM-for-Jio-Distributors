@@ -22,15 +22,17 @@ def create_app(config_class=Config):
     from crm.hisaab.routes import hisaabs
     from crm.master.routes import masters
     from crm.main.routes import main
-
-    db.init_app(app)
-    bcrypt.init_app(app)
-    login_manager.init_app(app)
-    mail.init_app(app)
+    from crm.errors.handlers import errors
 
     app.register_blueprint(users)
     app.register_blueprint(hisaabs)
     app.register_blueprint(masters)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
+
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
 
     return app
