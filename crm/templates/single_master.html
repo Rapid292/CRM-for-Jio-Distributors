@@ -4,7 +4,8 @@
 <div class="container-fluid text-center mt-2">
    <legend class="font-weight-bold mb-1">Master of Date-({{ master.date.strftime("%d-%m-%Y %H:%M") }})</legend>
    <div>
-      <a href="{{ url_for('update_master', master_id=master.id) }}" class="btn btn-secondary btn-sm m-2">Update</a>
+      <a href="{{ url_for('master.update_master', master_id=master.id) }}"
+         class="btn btn-secondary btn-sm m-2">Update</a>
       <button type="button" class="btn btn-danger btn-sm m-2" data-toggle="modal"
          data-target="#deleteModal">Delete</button>
    </div>
@@ -59,7 +60,7 @@
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <form action="{{ url_for('delete_master', master_id = master.id) }}" method="POST">
+            <form action="{{ url_for('master.delete_master', master_id = master.id) }}" method="POST">
                <input class="btn btn-danger" type="submit" value="Delete">
             </form>
          </div>

@@ -16,16 +16,16 @@
       {% if current_user.username != admin %}
       {% if fse == current_user %}
       <div class="inline mt-4">
-         <a href="{{ url_for('hisaab') }}" class="btn btn-outline-warning mr-2">Hisaab</a>
-         <a href="{{ url_for('user_hisaab', username=current_user.username) }}"
+         <a href="{{ url_for('hisaab.hisaab') }}" class="btn btn-outline-warning mr-2">Hisaab</a>
+         <a href="{{ url_for('users.user_hisaab', username=current_user.username) }}"
             class="btn btn-outline-warning">Report</a>
       </div>
       {% endif %}
       {% else  %}
       {% if fse == current_user %}
       <div class="inline mt-4">
-         <a href="{{ url_for('master') }}" class="btn btn-outline-warning mr-2">Master</a>
-         <a href="{{ url_for('report') }}" class="btn btn-outline-warning">FOS Report</a>
+         <a href="{{ url_for('master.master') }}" class="btn btn-outline-warning mr-2">Master</a>
+         <a href="{{ url_for('hisaab.report') }}" class="btn btn-outline-warning">FOS Report</a>
       </div>
       {% endif %}
       {% endif %}

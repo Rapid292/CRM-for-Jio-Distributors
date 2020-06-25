@@ -17,7 +17,7 @@
    <header class="site-header">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-6">
          <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home')}}">
+            <a class="navbar-brand" href="{{ url_for('main.home')}}">
                <h4>
                   SIDHWALI
                </h4>
@@ -32,10 +32,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <div class="navbar-nav mr-auto">
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                     <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ url_for('about') }}">about</a>
+                     <a class="nav-link" href="{{ url_for('main.about') }}">about</a>
                   </li>
                   <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -43,16 +43,16 @@
                         Report
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url_for('master_report') }}">Master</a>
+                        <a class="dropdown-item" href="{{ url_for('master.master_report') }}">Master</a>
                         {% if current_user.username == admin %}
-                        <a class="dropdown-item" href="{{ url_for('report') }}">FOS Report</a>
+                        <a class="dropdown-item" href="{{ url_for('hisaab.report') }}">FOS Report</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" target="_blank"
                            href="https://idm.jioconnect.com/jiosso/SSOLogin.jsp">JIO
                            LOGIN</a>
                         {% else %}
                         <a class="dropdown-item"
-                           href="{{ url_for('user_hisaab', username=current_user.username) }}">{{ current_user.username }}
+                           href="{{ url_for('users.user_hisaab', username=current_user.username) }}">{{ current_user.username }}
                            (Report)</a>
                         {% endif %}
                      </div>
@@ -62,17 +62,17 @@
                   <div class="d-flex justify-content-center">
                      {% if current_user.is_authenticated %}
                      <li class="nav-item">
-                        <a class="nav-link mr-2" href="{{ url_for('profile') }}">Profile</a>
+                        <a class="nav-link mr-2" href="{{ url_for('users.profile') }}">Profile</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link mr-2" href="{{ url_for('logout') }}">logout</a>
+                        <a class="nav-link mr-2" href="{{ url_for('users.logout') }}">logout</a>
                      </li>
                      {% else %}
                      <li class="nav-item">
-                        <a class="nav-link mr-2" href="{{ url_for('login') }}">login</a>
+                        <a class="nav-link mr-2" href="{{ url_for('users.login') }}">login</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">register</a>
+                        <a class="nav-link" href="{{ url_for('users.register') }}">register</a>
                      </li>
                      {% endif %}
                   </div>

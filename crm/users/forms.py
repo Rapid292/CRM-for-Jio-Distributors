@@ -1,17 +1,17 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileAllowed, FileField
 from wtforms import (
+    SubmitField,
     StringField,
     PasswordField,
-    SubmitField,
-    BooleanField,
-    IntegerField,
     TextAreaField,
+    IntegerField,
+    BooleanField,
     validators,
 )
-from wtforms.validators import DataRequired, Length, email, EqualTo, ValidationError
-from crm.models import User
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, email
 from flask_login import current_user
+from crm.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -89,28 +89,6 @@ class UpdateProfileForm(FlaskForm):
                 raise ValidationError(
                     f"{pos_id.data} is already registered under username {user.username}. Please choose a different one."
                 )
-
-
-class HisaabForm(FlaskForm):
-    opening = IntegerField("Opening", validators=[DataRequired()])
-    manual_trans = IntegerField("Manual Transfer", validators=[validators.Optional()])
-    auto_trans = IntegerField("Auto Transfer", validators=[validators.Optional()])
-    closing = IntegerField("Closing", validators=[DataRequired()])
-    last_debt = IntegerField("Last Debt", validators=[validators.Optional()])
-    amt_received = IntegerField("Amount Paying", validators=[DataRequired()])
-    remarks = TextAreaField("Remarks", validators=[validators.Optional()])
-    submit = SubmitField("Calculate")
-
-
-class MasterForm(FlaskForm):
-    opening = IntegerField("Opening", validators=[DataRequired()])
-    primary = IntegerField("Primary", validators=[validators.Optional()])
-    manual_trans = IntegerField("Manual Transfer", validators=[validators.Optional()])
-    auto_trans = IntegerField("Auto Transfer", validators=[validators.Optional()])
-    fos_bal = IntegerField("FOS Balance", validators=[DataRequired()])
-    master_bal = IntegerField("Master Balance", validators=[DataRequired()])
-    remarks = TextAreaField("Remarks", validators=[validators.Optional()])
-    submit = SubmitField("Calculate")
 
 
 class RequestResetForm(FlaskForm):

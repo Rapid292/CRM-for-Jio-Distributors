@@ -30,7 +30,7 @@
          <tr>
             <th scope="row">{{ hisaab.id }}</th>
             <td><a class="btn btn-outline-secondary"
-                  href="{{ url_for('single_hisaab', hisaab_id=hisaab.id) }}">{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</a>
+                  href="{{ url_for('hisaab.single_hisaab', hisaab_id=hisaab.id) }}">{{ hisaab.date.strftime("%d-%m-%Y %H:%M") }}</a>
             </td>
             <td><strong>{{ hisaab.open_bal }}</strong></td>
             <td>{{ hisaab.manual_trans }}</td>
@@ -46,7 +46,8 @@
             <td>{{ hisaab.remarks }}</td>
             {% if current_user.username == admin %}
             <td><a class="btn btn-outline-info"
-                  href="{{ url_for('user_hisaab', username=hisaab.fos.username) }}">{{ hisaab.fos.username }}</a></td>
+                  href="{{ url_for('users.user_hisaab', username=hisaab.fos.username) }}">{{ hisaab.fos.username }}</a>
+            </td>
             {% endif %}
          </tr>
          {% endfor %}
@@ -57,10 +58,10 @@
    {% if page_num %}
    {% if hisaab.page == page_num %}
    <a class="btn btn-info mb-4"
-      href="{{ url_for('user_hisaab', username=user.username, page=page_num) }}">{{ page_num }}</a>
+      href="{{ url_for('users.user_hisaab', username=user.username, page=page_num) }}">{{ page_num }}</a>
    {% else %}
    <a class="btn btn-outline-info mb-4"
-      href="{{ url_for('user_hisaab', username=user.username, page=page_num) }}">{{ page_num }}</a>
+      href="{{ url_for('users.user_hisaab', username=user.username, page=page_num) }}">{{ page_num }}</a>
    {% endif %}
    {% else %}
    ...
