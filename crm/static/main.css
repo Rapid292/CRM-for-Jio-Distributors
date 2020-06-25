@@ -1,5 +1,7 @@
 body {
    background-color: rgb(255, 255, 255);
+   min-width: fit-content;
+
 }
 
 
@@ -7,6 +9,19 @@ body {
    min-height: min-content;
    border: 2px solid black;
    
+}
+
+.container .card .btn.btn-outline-warning{
+   color: #9D1FFF;
+   border-color:#9D1FFF;
+   font-weight: bold;
+}
+
+.container .card .btn.btn-outline-warning:hover{
+   background-color: #9D1FFF;
+   border-color:#9D1FFF;
+   color: black;
+   font-weight: bold;
 }
 
 .site-header .navbar-nav .nav-welcome {
@@ -19,6 +34,18 @@ body {
 
 }
 
+.card.d-inline-flex.align-items-center{
+   border: none;
+   border-color: none;
+}
+
+.card.d-inline-flex.align-items-center:hover {
+   box-shadow: inset 0 0 6px 1px black;
+}
+
+.navbar-nav li.nav-welcome {
+   text-align: center;
+}
 
 .site-header .navbar-nav .nav-link {
    color: rgb(187, 180, 180);

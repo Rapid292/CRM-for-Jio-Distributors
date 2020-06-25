@@ -30,7 +30,7 @@ def index():
 def home():
     fos = User.query.all()
     return render_template(
-        "home.html", title="Home", fos=fos, Hisaab=Hisaab, admin=admin, Master=Master
+        "home.html", title="Home", fos=fos, Hisaab=Hisaab, admin=admin, Master=Master, db=db
     )
 
 
